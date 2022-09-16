@@ -1,0 +1,28 @@
+- name: install vim and zip
+  apt: name=vim,zip state=present
+
+- name: Ansible check directory
+  stat:
+    path: /tmp
+    register: test2
+
+- name: "echo if directory exist"
+debug:
+  msg: "the directory is already exist"
+
+- name: "Ansible create directory if not exists"
+  file:
+    path: /tmp/test2
+    state: directory
+    mode: 0755
+    group: root
+    owner: root
+    when: test2.stat.exists == false
+
+
+- name: Copy Hello.txt
+  copy: src=Hello.txt dest=/tmp/test2
+
+- name: copy hostname.j2
+  copy: src=hostname.j2 dest=/tmp/test2
+

@@ -1,0 +1,13 @@
+- name: Downloads web servers
+  hosts: servers
+  remote_user: root
+
+  - listVar:
+     - "vim"
+     - "zip"
+
+  task:
+    -  name: Ensure Vim and Zip are installed
+       ansible.builtin.apt:
+         name: "{{listVar}}"
+         state: latest
